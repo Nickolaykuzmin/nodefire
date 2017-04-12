@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.5.8/angular-route.js"></script>
+    <script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+    <script>
+        var app = angular.module('app', ['ngRoute','toastr']);
+        var config = {
+            apiKey: "AIzaSyBh4uyOrO6xTTtdFIdDx3LHWbOkEhbm6z8",
+            authDomain: "kongossa-978cc.firebaseapp.com",
+            databaseURL: "https://kongossa-978cc.firebaseio.com",
+            projectId: "kongossa-978cc",
+            storageBucket: "kongossa-978cc.appspot.com",
+            messagingSenderId: "139484847494"
+        };
+        firebase.initializeApp(config);
+
+
+        var db = firebase.database();
+
+        app.controller('AdminController',['$scope','$window','toastr','$location',function ($scope,$window,toastr,$location) {
+
+            var usersRef = db.ref('mean_data');
+            var user_child = usersRef.child('user');
+
+            user_child.set({
+                username: "admin",
+                userpass: "admin2017"
+            });
+
+
+            user_child.on('value',function (snapshot) {
+                $scope.user = {};
+                console.log(snapshot.val());
+                $scope.onSubmit = function () {
+                    if($scope.username === snapshot.val().username && $scope.password === snapshot.val().userpass){
+                        toastr.success('Success');
+                        $window.setTimeout(function () {
+                            $location.path('/adminpanel');
+                        },500);
+                    }
+
+                    else{
+                        toastr.error('Invalid Username or Password');
+                    }
+                }
+            });
+        }]);
+
+        app.controller('HomeController',['$scope',function($scope){
+
+            $scope.post_data = {};
+
+            var dataRef = db.ref('mean_data');
+            var data_post =  dataRef.child('data_post');
+
+            $scope.getPost = function () {
+                data_post.on('value',function (snapshot) {
+                    $scope.post_data = snapshot.val();
+                },function (errObj) {
+                    console.log('Read Data is failed!' + errObj);
+                });
+            };
+
+
+            $scope.addPost = function () {
+
+            };
+
+            $scope.uploadFile = function () {
+                var upload = document.getElementById('upload');
+
+                upload.addEventListener('change',function (e) {
+
+                    var storage = firebase.app().storage("kongossa-978cc.appspot.com");
+
+                    var file = e.target.files[0];
+
+                    var storageRef = storage.ref('post_images/' + file.name);
+                    storageRef.put(file);
+
+                    storageRef.getDownloadURL().then(function (url) {
+                        data_post.push({
+                            title: $scope.post_data.title,
+                            description: $scope.post_data.description,
+                            url: url
+                        });
+
+                        $scope.post_data = data_post;
+
+                    });
+
+
+
+                });
+
+
+            }
+
+        }]);
+
+        app.config(function($routeProvider) {
+            $routeProvider.when('/',{
+                controller: 'AdminController',
+                templateUrl: './adminpanel.html'
+            });
+            $routeProvider.when('/adminpanel', {
+                controller: 'HomeController',
+                templateUrl: './home.html'
+            });
+            $routeProvider.otherwise('/');
+
+        });
+
+    </script>
+    <meta charset="UTF-8">
+    <title>MEAN Stack End 2 End</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div ng-view></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

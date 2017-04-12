@@ -1,0 +1,75 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.btn-success{
+  width: 100%;
+  max-width:250px;
+}
+label{
+  margin-bottom: 5px;
+
+}
+
+.post_image{
+  max-width: 100px !important;
+  margin: 0 auto;
+}
+
+.users-container{
+  margin-bottom: 70px;
+}
+
+.users-container .btn-primary{
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.create-users .form-group{
+  margin-bottom: 17px;
+}
+.create-users{
+  text-align: center;
+}
+textarea{
+  width: 80% !important;
+  margin:0 auto;
+  height:auto !important;
+  min-height:80px;
+}
+.create-users input{
+  margin:0 auto;
+  width: 80% !important;
+}
+a {
+  color: #00B7FF;
+}
+
+.container #form{
+  margin: 16% auto 0;
+  float: none;
+}
+
+.container #form button{
+  max-width: 150px;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+  text-transform: uppercase;
+}
+
+.admin-panel{
+  text-align: center;
+}
+
+.table tr th{
+  text-align: center;
+}
+
+.container #form .form-group:last-child {
+  text-align: right;
+}

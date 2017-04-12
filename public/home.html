@@ -1,0 +1,55 @@
+<div class="container">
+
+    <div class="container users-container">
+        <table class="table table-bordered table-striped table-hovered table-condensed" ng-hide="vm.detailed">
+            <th>Title</th>
+            <th>Description</th>
+            <th>File</th>
+            <tr ng-repeat="post in post_data">
+                <td ng-if="!editing">{{post.title}}</td>
+                <td  ng-if="!editing">{{post.description}}</td>
+                <td><img src="{{post.url}}" class="img-responsive post_image" alt=""></td>
+                <!--<td ng-if="!editing" >{{post.file}}</td>-->
+
+                <td ng-if="editing">
+                    <input type="text" ng-model="post_data.name" class="form-control" style="width:100px;">
+                </td>
+                <td ng-if="editing">
+                    <input type="text" ng-model="post_data.age" class="form-control" style="width:100px;">
+
+                </td>
+                <!--<td ng-if="editing">-->
+                    <!--<input type="text" ng-model="vm.post.file" class="form-control" style="width:100px;">-->
+                <!--</td>-->
+
+            </tr>
+        </table>
+        <button class="btn btn-primary" ng-click="getPost()" >Show Posts</button>
+
+    </div>
+
+    <div class="container create-users">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input required type="text" id="title" class="form-control" style="width:300px;" ng-model="post_data.title">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea required  id="description" class="form-control" style="width:300px;" ng-model="post_data.description"></textarea>
+        </div>
+
+
+        <div class="form-group">
+            <input value="Load..."  type="file" ng-click="uploadFile()" id="upload">
+        </div>
+
+        <!--<div class="form-group">-->
+        <!--<label for="file">File</label>-->
+        <!--<input required type="text" id="file" class="form-control" style="width:300px;" ng-model="post.file">-->
+        <!--</div>-->
+        <button class="btn btn-success" ng-click="addPost()">Add Post</button>
+    </div>
+
+
+
+</div>
