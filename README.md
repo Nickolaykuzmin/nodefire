@@ -1,5 +1,12 @@
 # NodeFire
 
+#Test Hosting
+https://kongossa-978cc.firebaseapp.com/#/
+Test Data:
+admin
+admin2017
+
+
 1. Install NodeJs And use Command npm install in project
 2. Change Config in public/index.html for Firebase!!!
 3  Create inside Firebase Panel  branch mean_data
